@@ -8,7 +8,7 @@ NAME="lghg-$RANDOM"
 AZURE_RESOURCE_GROUP="${NAME}-group"
 
 #  westus2 can be changed to any available location (`az account list-locations`)
-az group create --name "${AZURE_RESOURCE_GROUP}" -l centralindia
+az group create --name "${AZURE_RESOURCE_GROUP}" -l westus2
 
 az network vnet create \
     --resource-group "${AZURE_RESOURCE_GROUP}" \
@@ -40,4 +40,13 @@ az aks get-credentials \
     --resource-group "${AZURE_RESOURCE_GROUP}" \
     --name "${NAME}"
 
-helm install -n kube-system atomix ../../Helm/atomix-helm-charts/atomix
+cilium install \
+    --version 1.15.5 \
+    --set azure.resourceGroup="${AZURE_RESOURCE_GROUP}" \
+    --set cluster.id=1 \
+    --set ipam.operator.clusterPoolIPv4PodCIDRList='{10.10.0.0/16}'
+
+cilium clustermesh enable --context $NAME --enable-kvstoremesh
+cilium clustermesh status --context $CLUSTER1 --wait
+
+helm install -n kube-system atomix ../../Helm/atomix-helm-charts/atomix-umbrella
