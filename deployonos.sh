@@ -1,8 +1,5 @@
 #!/usr/bin/bash
 
-CLUSTER1="lghg-5989"
-CLUSTER2="lghg-18709"
-
 onos_install() {
     kubectl config set-context $1
     kubectl create namespace micro-onos-$1 --context=$1

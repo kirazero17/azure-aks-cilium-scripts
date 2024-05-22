@@ -127,3 +127,9 @@ main() {
 
 az login
 main
+
+echo -e '#!/bin/bash' > ./envvar.sh
+echo -e '' >> ./envvar.sh
+echo -e '# source this file instead of running it' >> ./envvar.sh
+echo "export CLUSTER1=\"${CLUSTER1}\"" >> ./envvar.sh
+echo "export CLUSTER2=\"${CLUSTER2}\"" >> ./envvar.sh
