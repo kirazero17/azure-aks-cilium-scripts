@@ -28,8 +28,7 @@ NODE_SUBNET_ID=$(az network vnet subnet show \
 az aks create \
     --resource-group "${AZURE_RESOURCE_GROUP}" \
     --name "${NAME}" \
-    --network-plugin azure \
-	--network-plugin-mode overlay \
+    --network-plugin none \
     --pod-cidr "10.10.0.0/16" \
     --service-cidr "10.11.0.0/16" \
     --dns-service-ip "10.11.0.10" \
@@ -47,6 +46,6 @@ cilium install \
     --set ipam.operator.clusterPoolIPv4PodCIDRList='{10.10.0.0/16}'
 
 cilium clustermesh enable --context $NAME --enable-kvstoremesh
-cilium clustermesh status --context $CLUSTER1 --wait
+cilium clustermesh status --context $NAME --wait
 
 helm install -n kube-system atomix ../../Helm/atomix-helm-charts/atomix-umbrella
