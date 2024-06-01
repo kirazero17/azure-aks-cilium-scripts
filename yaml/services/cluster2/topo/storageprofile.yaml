@@ -32,14 +32,3 @@ spec:
             cache:
               enabled: true
           kind: Map
-    - store:
-        name: onos-topo-consensus-2
-        namespace: micro-onos-2
-      rules:
-        - names:
-          - '*'
-        - apiVersion: v1
-          config:
-            cache:
-              enabled: true
-          kind: Map
