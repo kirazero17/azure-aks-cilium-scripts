@@ -1,5 +1,14 @@
 #!/usr/bin/bash
 
+kind create cluster
+kind get kubeconfig > ~/.kube/kind
+export KUBECONFIG=~/.kube/kind
+
+helm repo add cord https://charts.opencord.org
+helm repo add atomix https://charts.atomix.io
+helm repo add onosproject https://charts.onosproject.org
+helm repo update
+
 MSYS_NO_PATHCONV=1
 
 cilium install \
