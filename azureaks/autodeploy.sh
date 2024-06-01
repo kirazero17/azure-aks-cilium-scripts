@@ -58,6 +58,8 @@ createresource() {
     echo -e  "Installing cilium for cluster ${NAME}..."
     cilium install \
         --version 1.15.5 \
+        --set etcd.enabled=true \
+        --set identityAllocationMode=kvstore \
         --set azure.resourceGroup="${AZURE_RESOURCE_GROUP}" \
         --set cluster.id=$3 \
         --set ipam.operator.clusterPoolIPv4PodCIDRList="{10.$((10*$3)).0.0/16}"

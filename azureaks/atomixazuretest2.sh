@@ -33,7 +33,7 @@ az aks create \
     --service-cidr "10.11.0.0/16" \
     --dns-service-ip "10.11.0.10" \
     --vnet-subnet-id "${NODE_SUBNET_ID}" \
-    -s standard_d2as_v4 -c 1
+    -s standard_d4ds_v4 -c 1
 
 az aks get-credentials \
     --resource-group "${AZURE_RESOURCE_GROUP}" \
@@ -45,7 +45,21 @@ cilium install \
     --set cluster.id=1 \
     --set ipam.operator.clusterPoolIPv4PodCIDRList='{10.10.0.0/16}'
 
+cilium hubble enable --ui
+
 cilium clustermesh enable --context $NAME --enable-kvstoremesh
 cilium clustermesh status --context $NAME --wait
 
-helm install -n kube-system atomix ../../Helm/atomix-helm-charts/atomix-umbrella
+kubectl create namespace micro-onos-1
+kubectl create namespace micro-onos-2
+
+helm upgrade -i cilium cilium/cilium
+helm upgrade -i -n kube-system atomix ../../../Helm/atomix-helm-charts/atomix-umbrella
+helm upgrade -i -n kube-system onos-operator onosproject/onos-operator
+
+helm upgrade -i -n micro-onos-1 onos-umbrella ../../../Helm/onos-helm-charts/onos-umbrella
+helm upgrade -i -n micro-onos-2 onos-umbrella ../../../Helm/onos-helm-charts/onos-umbrella
+
+# --set etcd.enabled=true \
+# --set identityAllocationMode=kvstore \
+# --set "etcd.endpoints[0]=http://atomix-controller:443" \
