@@ -15,9 +15,10 @@ cilium install \
     --version 1.15.5 \
     --set azure.resourceGroup="${AZURE_RESOURCE_GROUP}" \
     --set cluster.id=1 \
-    --set ipam.operator.clusterPoolIPv4PodCIDRList='{10.10.0.0/16}'
-
-cilium hubble enable --ui
+    --set ipam.operator.clusterPoolIPv4PodCIDRList='{10.10.0.0/16}' \
+    --set hubble.enabled=true \
+    --set hubble.relay.enabled=true \
+    --set hubble.ui.enabled=true
 
 kubectl create namespace micro-onos-1
 kubectl create namespace micro-onos-2
