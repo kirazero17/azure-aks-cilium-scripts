@@ -1,21 +1,19 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 kind create cluster
 kind get kubeconfig > ~/.kube/kind
-export KUBECONFIG=~/.kube/kind
+KUBECONFIG=~/.kube/kind
 
 helm repo add cord https://charts.opencord.org
 helm repo add atomix https://charts.atomix.io
 helm repo add onosproject https://charts.onosproject.org
 helm repo update
 
-MSYS_NO_PATHCONV=1
+# MSYS_NO_PATHCONV=1
 
 cilium install \
     --version 1.15.5 \
-    --set azure.resourceGroup="${AZURE_RESOURCE_GROUP}" \
     --set cluster.id=1 \
-    --set ipam.operator.clusterPoolIPv4PodCIDRList='{10.10.0.0/16}' \
     --set hubble.enabled=true \
     --set hubble.relay.enabled=true \
     --set hubble.ui.enabled=true

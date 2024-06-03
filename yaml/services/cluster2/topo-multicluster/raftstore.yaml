@@ -1,7 +1,7 @@
 apiVersion: raft.atomix.io/v1beta3
 kind: RaftStore
 metadata:
-  name: onos-topo-consensus-2
+  name: onos-topo-consensus-other
   namespace: micro-onos-2
   labels:
     name: onos-topo-consensus

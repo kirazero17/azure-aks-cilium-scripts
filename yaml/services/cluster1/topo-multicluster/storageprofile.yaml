@@ -1,0 +1,34 @@
+apiVersion: atomix.io/v3beta4
+kind: StorageProfile
+metadata:
+  name: onos-topo
+  namespace: micro-onos-1
+  labels:
+    name: onos-topo
+    chart: "onos-topo-1.5.1"
+    release: "onos-umbrella"
+    heritage: "Helm"
+spec:
+  routes:
+    - store:
+        name: onos-topo-consensus
+        namespace: micro-onos-1
+      rules:
+        - names:
+          - '*'
+        - apiVersion: v1
+          config:
+            cache:
+              enabled: true
+          kind: Map
+    - store:
+        name: onos-topo-consensus-other
+        namespace: micro-onos-1
+      rules:
+        - names:
+          - '*'
+        - apiVersion: v1
+          config:
+            cache:
+              enabled: true
+          kind: Map
