@@ -51,8 +51,8 @@ cilium clustermesh enable --context $NAME --enable-kvstoremesh
 cilium clustermesh status --context $NAME --wait
 
 kubectl create namespace micro-onos
+kubectl create namespace micro-onos-data
 
-helm upgrade -i cilium cilium/cilium
 helm upgrade -i -n kube-system atomix ../../../Helm/atomix-helm-charts/atomix-umbrella
 helm upgrade -i -n kube-system onos-operator onosproject/onos-operator
 helm upgrade -i -n micro-onos onos-umbrella ../../../Helm/onos-helm-charts/onos-umbrella

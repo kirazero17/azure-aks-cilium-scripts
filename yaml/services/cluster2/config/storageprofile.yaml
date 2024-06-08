@@ -12,7 +12,7 @@ spec:
   routes:
     - store:
         name: onos-config-consensus
-        namespace: micro-onos-1
+        namespace: micro-onos-2
       rules:
         - names:
           - '*'
@@ -23,7 +23,7 @@ spec:
           kind: Map
     - store:
         name: onos-config-consensus
-        namespace: micro-onos-2
+        namespace: micro-onos-1
       rules:
         - names:
           - '*'
