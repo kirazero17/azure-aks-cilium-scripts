@@ -1,0 +1,34 @@
+apiVersion: atomix.io/v3beta4
+kind: StorageProfile
+metadata:
+  name: onos-umbrella-device-provisioner
+  namespace: micro-onos-${CLUSTER2}
+  labels:
+    name: onos-umbrella-device-provisioner
+    chart: "device-provisioner-1.2.15"
+    release: "onos-umbrella"
+    heritage: "Helm"
+spec:
+  routes:
+  - store:
+      name: onos-raft-data-device-provisioner
+      namespace: micro-onos-data
+    rules:
+    - names:
+      - '*'
+    - apiVersion: v1
+      config:
+        cache:
+          enabled: true
+      kind: Map
+  # - store:
+  #     name: onos-raft-data-device-provisioner
+  #     namespace: micro-onos-data-2
+  #   rules:
+  #   - names:
+  #     - '*'
+  #   - apiVersion: v1
+  #     config:
+  #       cache:
+  #         enabled: true
+  #     kind: Map

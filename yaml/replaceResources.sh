@@ -1,25 +1,29 @@
 #!/usr/bin/bash
 
-for file in ./services/cluster1/**/rolebinding.yaml
+kubectl config set-context $CLUSTER1
+for file in ./services/single/**/rolebinding.yaml
 do
     echo -e "creating ${file}"
-    kubectl -n micro-onos-1 replace -f ${file}
+    envsubst < ${file} | kubectl -n micro-onos-data create -f -
 done
 
-for file in ./services/cluster2/**/rolebinding.yaml
+kubectl config set-context $CLUSTER2
+for file in ./services/single/**/rolebinding.yaml
 do
     echo -e "creating ${file}"
-    kubectl -n micro-onos-2 replace -f ${file}
+    envsubst < ${file} | kubectl -n micro-onos-data create -f -
 done
 
-for file in ./services/cluster1/**/storageprofile.yaml
-do
-    echo -e "replacing ${file}"
-    kubectl -n micro-onos-1 replace -f ${file}
-done
+# kubectl config set-context $CLUSTER1
+# for file in ./services/single/**/storageprofile.yaml
+# do
+#     echo -e "replacing ${file}"
+#     kubectl -n micro-onos-lghg-25390 replace -f ${file}
+# done
 
-for file in ./services/cluster2/**/storageprofile.yaml
-do
-    echo -e "replacing ${file}"
-    kubectl -n micro-onos-2 replace -f ${file}
-done
+# kubectl config set-context $CLUSTER2
+# for file in ./services/single2/**/storageprofile.yaml
+# do
+#     echo -e "replacing ${file}"
+#     kubectl -n micro-onos-lghg-22375 replace -f ${file}
+# done

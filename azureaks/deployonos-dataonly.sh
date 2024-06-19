@@ -7,9 +7,6 @@ onos_install() {
     helm --kube-context $1 upgrade -i -n kube-system atomix ../../../Helm/atomix-helm-charts/atomix-umbrella 
     helm --kube-context $1 upgrade -i -n kube-system onos-operator onosproject/onos-operator
     helm --kube-context $1 upgrade -i -n micro-onos-data onos-raft-data ../../../Helm/onos-helm-charts/onos-raft
-    helm --kube-context $1 upgrade -i -n micro-onos-$1 onos-umbrella ../../../Helm/onos-helm-charts/onos-umbrella \
-        --set global.atomix.store.consensus.namespace="micro-onos-data" \
-        --set global.atomix.store.consensus.name="onos-raft-data"
 }
 
 helm repo update

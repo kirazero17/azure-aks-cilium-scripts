@@ -9,7 +9,7 @@ helm repo add atomix https://charts.atomix.io
 helm repo add onosproject https://charts.onosproject.org
 helm repo update
 
-# MSYS_NO_PATHCONV=1
+helm install etcd-data oci://registry-1.docker.io/bitnamicharts/etcd
 
 cilium install \
     --version 1.15.5 \
@@ -21,7 +21,6 @@ cilium install \
 kubectl create namespace micro-onos-1
 kubectl create namespace micro-onos-2
 
-helm upgrade -i cilium cilium/cilium
 helm upgrade -i -n kube-system atomix ../../../Helm/atomix-helm-charts/atomix-umbrella
 helm upgrade -i -n kube-system onos-operator onosproject/onos-operator
 

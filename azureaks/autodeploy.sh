@@ -58,13 +58,12 @@ createresource() {
     echo -e  "Installing cilium for cluster ${NAME}..."
     cilium install \
         --version 1.15.5 \
-        --set etcd.enabled=true \
-        --set identityAllocationMode=kvstore \
         --set azure.resourceGroup="${AZURE_RESOURCE_GROUP}" \
         --set cluster.id=$3 \
         --set ipam.operator.clusterPoolIPv4PodCIDRList="{10.$((10*$3)).0.0/16}"
 
     cilium status --context $1 --wait
+    cilium hubble enable --ui
 }
 
 vnetpeer() {
@@ -130,8 +129,8 @@ main() {
 az login
 main
 
-echo -e '#!/bin/bash' > ./envvar.sh
-echo -e '' >> ./envvar.sh
-echo -e '# source this file instead of running it' >> ./envvar.sh
-echo "export CLUSTER1=\"${CLUSTER1}\"" >> ./envvar.sh
-echo "export CLUSTER2=\"${CLUSTER2}\"" >> ./envvar.sh
+echo -e '#!/bin/bash' > ./envvar
+echo -e '' >> ./envvar
+echo -e '# source this file instead of running it' >> ./envvar
+echo "export CLUSTER1=\"${CLUSTER1}\"" >> ./envvar
+echo "export CLUSTER2=\"${CLUSTER2}\"" >> ./envvar
