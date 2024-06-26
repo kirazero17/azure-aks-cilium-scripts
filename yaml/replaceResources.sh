@@ -1,13 +1,13 @@
 #!/usr/bin/bash
 
-kubectl config set-context $CLUSTER1
+kubectl config use-context $CLUSTER1
 for file in ./services/single/**/rolebinding.yaml
 do
     echo -e "creating ${file}"
     envsubst < ${file} | kubectl -n micro-onos-data create -f -
 done
 
-kubectl config set-context $CLUSTER2
+kubectl config use-context $CLUSTER2
 for file in ./services/single/**/rolebinding.yaml
 do
     echo -e "creating ${file}"

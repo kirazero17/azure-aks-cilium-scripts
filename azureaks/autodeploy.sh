@@ -63,7 +63,7 @@ createresource() {
         --set ipam.operator.clusterPoolIPv4PodCIDRList="{10.$((10*$3)).0.0/16}"
 
     cilium status --context $1 --wait
-    cilium hubble enable --ui
+    #cilium hubble enable --ui
 }
 
 vnetpeer() {
@@ -106,8 +106,8 @@ clusterconnect() {
     echo -e  "Clustermesh connection between $1 and $2 is being initiated..."
     echo -e  ""
 
-    cilium clustermesh enable --context $1 --enable-kvstoremesh
-    cilium clustermesh enable --context $2 --enable-kvstoremesh
+    cilium clustermesh enable --context $1 --enable-kvstoremesh --service-type NodePort
+    cilium clustermesh enable --context $2 --enable-kvstoremesh --service-type NodePort
 
     echo -e  "Waiting for clustermesh on cluster $1"
     cilium clustermesh status --context $1 --wait
