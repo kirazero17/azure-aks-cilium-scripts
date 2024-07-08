@@ -1,0 +1,24 @@
+apiVersion: raft.atomix.io/v1beta3
+kind: RaftReplica
+metadata:
+  name: onos-umbrella-topo-cluster2-1-1
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    chart: onos-umbrella-1.3.32
+    heritage: Helm
+    raft.atomix.io/cluster: onos-umbrella-consensus
+    raft.atomix.io/group-id: ${GROUP_ID}
+    raft.atomix.io/member-id: ${memb}
+    raft.atomix.io/namespace: micro-onos-data
+    raft.atomix.io/pod: onos-umbrella-consensus-${n}
+    release: onos-umbrella
+spec:
+  groupID: ${GROUP_ID}
+  memberID: ${memb}
+  replicaID: ${replicaid}
+  type: Voter
+  pod: 
+    name: onos-umbrella-consensus-${n}
+    namespace: micro-onos-east
+  join: true
+  peers: 2

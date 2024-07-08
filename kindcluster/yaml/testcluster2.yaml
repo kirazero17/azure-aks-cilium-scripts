@@ -1,0 +1,36 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+# 2 control plane node and 2 workers
+nodes:
+# the control plane node config
+# control-plane
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  - |
+    apiVersion: kubeadm.k8s.io/v1beta1
+    kind: ClusterConfiguration
+    networking:
+      dnsDomain: "cluster2.local"
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 280
+    listenAddress: 127.0.0.1
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 643
+    listenAddress: 127.0.0.1
+    protocol: TCP
+# the 3 workers
+- role: worker
+# - role: worker
+
+networking:
+  podSubnet: 10.11.0.0/16
+  serviceSubnet: 10.21.0.0/16
+  disableDefaultCNI: true
+  kubeProxyMode: none
